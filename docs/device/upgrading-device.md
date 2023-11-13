@@ -39,3 +39,23 @@ Follow these steps to manually upgrade to the latest version:
     * This will stop the local HTTP server
 7. You are now running the latest version of MyNode software!
 
+
+## Manual Upgrade - ALTERNATIVE METHOD (Some users have experienced issues with the above)
+
+### Steps to upgrade
+**Assuming the local IP of your myNode is 192.168.1.50**
+
+1. Open Terminal in Linux/Mac, install Putty or any other SSH client in Windows
+2. Remote login to your mynode by `ssh admin@mynode.local` or `ssh admin@192.168.1.50`. Enter your password when prompted (no asterisks or dots will be shown while you type).
+3. If you are upgrading for the first time, clone the github repository: `git clone https://github.com/mynodebtc/mynode.git mynode-git`
+4. Move inside the git repo: `cd mynode-git`
+5. Download the latest commits from github: `git pull`. Note that the latest commits might be experimental and untested.
+6. Create a tar file of root filesystem: `make rootfs`
+7. Start a web-server: `make start_file_server`
+8. Move back to home folder: `cd ~`
+9. Unpack the TAR file and apply the upgrade: `sudo mynode-local-upgrade localhost`. This step should install all dependencies and apply upgrades followed by a reboot (which should automatically log you out).
+
+**Repeat step 9 if there's any error.**
+
+To apply subsequent upgrades, skip the Step 7. You will get a harmless message "HTTP Server appears to already be running" if you repeat step 7. You can choose to stop the file server using `make stop_file_server`.
+
